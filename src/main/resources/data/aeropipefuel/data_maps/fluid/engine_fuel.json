@@ -1,0 +1,5 @@
+{
+  "values": {
+    "minecraft:lava": { "item": "minecraft:lava_bucket", "amount": 1000 }
+  }
+}

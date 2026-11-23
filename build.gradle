@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = mod_version
+group = 'com.example.aeropipefuel'
+base { archivesName = mod_id }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+// Мод не зависит от кода Create / Simulated / Aeronautics на этапе компиляции:
+// двигатель находится по id блока и управляется через стандартные capability NeoForge.
+neoForge {
+    version = neo_version
+    runs {
+        client { client(); systemProperty 'neoforge.enabledGameTestNamespaces', mod_id }
+        server { server(); programArgument '--nogui' }
+    }
+    mods { "${mod_id}" { sourceSet sourceSets.main } }
+}
+
+processResources {
+    var props = [mod_id: mod_id, mod_version: mod_version, neo_version: neo_version]
+    inputs.properties props
+    filesMatching('META-INF/neoforge.mods.toml') { expand props }
+}
